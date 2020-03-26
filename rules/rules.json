@@ -1,0 +1,7 @@
+rulesJson = '['+
+        '{"name" : "Règle n° 1",'+ 
+        '"text" : "20"},'+
+        '{"name" : "Règle n° 2",'+
+        '"text" : ""}'+
+        ']';
+

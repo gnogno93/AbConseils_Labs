@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script src="asset/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+        <link rel="stylesheet" href="asset/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+        <script src="asset/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>    
+        
+    </head>
+    <body>
+    
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 abconseils_logo">
+                    <div class="img-responsive">
+                        <img src="rcs/icon/abconseils.png" alt="abconseils">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    
+    <div class="container_terminal">
+        <div class="container title">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Les règles du lab</h1>
+                </div>
+            </div>
+        </div>
+         <div class="container pdf">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="img-responsive">
+                        <a href="#">
+                            <img src="rcs/icon/pdf_64.png" alt="rules.pdf">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="img-responsive">
+                        <a href="#">
+                            <img src="rcs/icon/word_64.png" alt="rules.pdf">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="img-responsive">
+                        <a href="#">
+                            <img src="rcs/icon/doc_64.png" alt="rules.pdf">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="container terminal">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="container_text" id="terminal">
+                        <span id="text_0">></span>
+                        <div class="container_underscore" id="underscore">&#95;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="rules.json"></script>
+    
+    <script>
+    var step = 0;
+    var actualKey = 0;
+    
+    function terminal()
+    {
+       var text = '"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio'; 
+       var rules = JSON.parse(rulesJson);
+       
+       run(text);
+    }
+
+    function run(text)
+    {
+       var _noWriteText = window.setInterval(function() {
+            if(jQuery('#underscore').text() == '_') {
+                jQuery('#underscore').text('');
+            } else{
+                jQuery('#underscore').text('_');
+            }
+        }, 500); 
+        
+       var _writeText = window.setInterval(function() {
+            if(text.length != actualKey) {
+                jQuery('#text_'+step).text(jQuery('#text_'+step).text() + text[actualKey]);    
+                actualKey++;          
+            } else{ 
+                step++;
+                if(step >= 4) {
+                    clearInterval(_writeText);
+                } else {
+                    jQuery('#terminal').append('<br /><br /><span id="text_'+ step +'">></span>');
+                    jQuery('#underscore').remove();
+                    jQuery('#terminal').append(' <div class="container_underscore" id="underscore">&#95;</div>');
+                  
+                    actualKey = 0;
+                }
+            }            
+        }, 10);
+    }
+    </script>
+    
+   <footer class="footer">
+   
+       
+        
+        <div class="container_footer">
+            <div class="row">
+                <div class="col-md-6">
+                   <a href="https://github.com/"> 
+                    <img src="rcs/icon/github_32.png" alt="github" style="height:32px; width:32px;">
+                   </a>
+                </div>
+                <div class="col-md-6" style="margin-top:5px;">
+                    &copy; No copyright &hearts; 
+                </div>
+            </div>
+        </div>
+        
+    </footer>
+
+    <div id="animation_background">
+        <div id="animation_logo">
+            <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                <div class="img-responsive">
+                    <img src="rcs/icon/abconseils.png" alt="abconseils">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                <div class="img-responsive">
+                    <img src="rcs/icon/cfi.png" alt="cfi">
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+        </div>
+    </div>
+   
+    
+    <script>
+    jQuery(document).ready(function(){
+        jQuery('#animation_logo').fadeOut(1500 ,(function(){
+            jQuery('#animation_logo').remove();
+            _backgroundFadeOut();
+        }));
+        _backgroundFadeOut = function() {
+            jQuery('#animation_background').fadeOut(1000 ,(function(){
+                jQuery('#animation_background').remove();
+                terminal();
+            }));
+        }
+    });
+    </script>
+    
+   
+    
+    </body>
+</html>
+<style>
+
+html, body {
+    height:100%;
+    width:100%;
+    padding:0;
+    margin:0;
+    background-color:black;
+}
+ 
+.footer {
+    color: white;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    bottom: 0;
+    text-align:center;
+}
+
+.footer .container_footer { 
+    background-color: #34475E;
+}
+
+.footer .pdf {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+#animation_background {
+    position: absolute;
+	top: 0;
+	left: 0;
+    height:100%;
+	width: 100%;
+    background-color: white;
+}
+
+header .abconseils_logo{
+    text-align: center;
+}
+
+
+#animation_logo {
+    text-align: center;
+}
+
+.container_terminal .container {;
+    color: #1ff042;
+}
+
+.container_terminal .title {
+    text-align: center;
+}
+
+.container_underscore {
+  display:inline-block;
+  position:relative;
+  top:-0.14em;
+  left:10px;
+}
+
+
+
+</style>
+
+
