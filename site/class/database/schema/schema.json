@@ -1,0 +1,10 @@
+{
+    "DATABASE": {
+        "users":"CREATE TABLE IF NOT EXISTS \"{prefix}users\"()ENGINE=INNODB;"
+    },
+    "SIG_VIEW": {
+        "key":"",
+        "text:EN":"Well done you found a key/you Know the architecture of the database now",
+        "text:FR":"Bravo tu as trouvé une clé/Vous connaissez maintenant l'architecture de la base de données"
+    }
+}

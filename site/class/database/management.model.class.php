@@ -18,9 +18,19 @@ define('DB_DATABASE', ['test', 'test2']);
 * without prefix the database will be lost or will not be created
 */
 
-define('DB_PREFIX', null); // autoChange
+define('DB_PREFIX', 'aPChLZ_');
+//define('DB_PREFIX', null); // autoChange
 
 require_once(realpath('./').'/function/prefix.function.php');
+
+
+/*
+* this class is static
+* it represents the database connection as well as the most used requests
+* it will first create the database and it is table if it does not exist
+* WARNING: it never checks it's input argument to this method
+* WARNING: it only checks things used for initialization of the database (schema/prefix/connection)
+*/
 
 class Management
 {
@@ -109,10 +119,14 @@ class Management
     
     static public function createDatabase()
     {
-        if(self::isConnected() && self::prefixExists())
+        if(!(self::isConnected() && self::prefixExists()))
         {
            return false;
-        }
+        } 
+
+        $string = file_get_contents(dirname(__FILE__).'/schema/schema.json');
+        $json_a = json_decode($string);
+        var_dump($json_a);
         
         try 
         {
