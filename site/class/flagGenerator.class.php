@@ -22,7 +22,7 @@ class FlagGenerator
             {
                 $this->flag[] = [$value => $this->getFlag($value)];
             }
-           
+            
             foreach($this->flag as $value)
             {
                 foreach($value as $name => $key)

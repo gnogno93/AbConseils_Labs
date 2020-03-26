@@ -1,19 +1,32 @@
 <?php 
 
 /*
-* this section must be configured during installation
+* this section must be configured during installation (bastian)
+* the configuration below must be modified
+* they are configured for a test environment currently
+* if no changes are made, it is likely that the connection will never be established
 */
+
 define('DB_SERVER','127.0.0.1:3308');
 define('DB_USERNAME','root');
 define('DB_PASSWORD','root');
 define('DB_DATABASE', ['test', 'test2']);
+
+/*
+* WARNING: do not delete the comment below 
+* it will be changed automatically at first start with the prefix
+* without prefix the database will be lost or will not be created
+*/
+
+define('DB_PREFIX', null); // autoChange
 
 require_once(realpath('./').'/function/prefix.function.php');
 
 class Management
 {
     static private $db_connect;
-    static private $db_name=DB_DATABASE;
+    static private $db_name = DB_DATABASE;
+    static private $db_prefix = DB_PREFIX;
     
     public function __construct() {
         
@@ -21,9 +34,9 @@ class Management
     
     static public function connect()
     {
-        $db_host=DB_SERVER;
-        $db_user=DB_USERNAME;
-        $db_pass=DB_PASSWORD;
+        $db_host = DB_SERVER;
+        $db_user = DB_USERNAME;
+        $db_pass = DB_PASSWORD;
         
         try
         {
@@ -43,16 +56,60 @@ class Management
            {
                return false;
            }
-           
+           return true;
         } else {
             return true;
         }
     }
     
+    static public function prefixExists()
+    {
+        if(empty(self::$db_prefix))
+        {
+            self::initPrefix();
+            if(empty(self::$db_prefix))
+            {
+                return false;
+            }
+            return true;
+        } else{
+            return true;
+        }
+    }
+    
+    static public function initPrefix()
+    {
+        $file = dirname(__FILE__).'/management.model.class.php';
+        if(!is_writable($file) && !is_readable($file)) 
+        {
+            return;
+        }
+        if(!$ptr = fopen($file, "r")) return;
+        if(!$content = fread($ptr, filesize($file))) return;
+            
+        fclose($ptr);
+            
+        $content = explode(PHP_EOL, $content);
+        $search = 'autoChange';
+        $prefix = prefixWithUnderscore();
+        for($i=0; $i<count($content)-1; $i++)
+        {
+            if(preg_match("/{$search}/i", $content[$i])  ) {;
+                $content[$i] = "define('DB_PREFIX', '".$prefix."');";
+                break;
+            } 
+        }
+        $content = implode(PHP_EOL, $content);
+        if(!$ptr = fopen($file, 'w')) return;
+            
+        fwrite($ptr, $content);
+        fclose($ptr); 
+        self::$db_prefix = $prefix;   
+    }
+    
     static public function createDatabase()
     {
-        echo PrefixWithUnderscore(6);
-        if(self::isConnected())
+        if(self::isConnected() && self::prefixExists())
         {
            return false;
         }
@@ -88,6 +145,16 @@ class Management
             echo 'Connection failed '. $error->getMessage();
         } 
     }
+    
+    static public function selectFrom()
+    {
+    }
+    
+    static public function updateSet()
+    {
+    }
+    
+
     
     
 }

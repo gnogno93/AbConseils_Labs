@@ -1,7 +1,14 @@
 <?php 
 
+/*
+* this section contains functions to create a database prefix
+* it takes characters between 65 and 90 (uppercase) and 97 to 122 (lowercase) randomly
+* use prefixWithUnderscore to have an underscore as the ending character
+* WARNING: if you don't send anything, the prefix will be 6 by default
+*/
 
-function Prefix($iteration = 6)
+
+function prefix($iteration = 6)
 {
     $str = '';
     random_int (0 ,1);
@@ -18,9 +25,9 @@ function Prefix($iteration = 6)
     return $str;
 }
 
-function PrefixWithUnderscore($iteration = 6)
+function prefixWithUnderscore($iteration = 6)
 {
-    return Prefix($iteration).'_';
+    return prefix($iteration).'_';
 }
 
 ?>
