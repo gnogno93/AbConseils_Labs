@@ -10,7 +10,7 @@
 define('DB_SERVER','127.0.0.1:3308');
 define('DB_USERNAME','root');
 define('DB_PASSWORD','root');
-define('DB_DATABASE', ['test', 'test2']);
+define('DB_DATABASE', 'test');
 
 /*
 * WARNING: do not delete the comment below 
@@ -55,6 +55,20 @@ class Management
             // html error 
             echo 'Connection failed '. $error->getMessage();
         } 
+    }
+    
+    static private function useDatabase($db_name)
+    {
+         if(!(self::isConnected() && self::prefixExists()))
+         {
+           return false;
+         }
+         
+         if(!empty($db_name))
+         {
+            $db_bind = self::$db_connect->prepare("USE $db_name");
+            $db_bind->execute();
+         }
     }
     
     static public function isConnected()
@@ -124,19 +138,24 @@ class Management
            return false;
         } 
 
-        $string = file_get_contents(dirname(__FILE__).'/schema/schema.json');
-        $json_a = json_decode($string);
-        var_dump($json_a);
+
         
         try 
         {
-            foreach(self::$db_name as $value)
+            if(is_array(self::$db_name))
             {
-                if(!empty($value) && is_string($value))
+                foreach(self::$db_name as $value)
                 {
-                    $db_bind = self::$db_connect->prepare("CREATE DATABASE IF NOT EXISTS $value;");
-                    $db_bind->execute();
+                    if(!empty($value) && is_string($value))
+                    {
+                        $db_bind = self::$db_connect->prepare("CREATE DATABASE IF NOT EXISTS $value CHARACTER SET utf8 COLLATE utf8_general_ci");
+                        $db_bind->execute();
+                    }
                 }
+            } else {
+                $data = self::$db_name;
+                $db_bind = self::$db_connect->prepare("CREATE DATABASE IF NOT EXISTS $data CHARACTER SET utf8 COLLATE utf8_general_ci");
+                $db_bind->execute();
             }
         } catch(PDOExeception $error){
             // html error 
@@ -146,13 +165,25 @@ class Management
     
     static public function createTable()
     {
-        if(self::isConnected())
+        if(!(self::isConnected() && self::prefixExists()))
         {
            return false;
-        }
+        } 
         
         try 
         {
+            $schema = file_get_contents(dirname(__FILE__).'/schema/schema.json');
+            $schema = json_decode($schema); 
+            
+            self::useDatabase('test');
+            
+            foreach($schema->DATABASE as $key => $value)
+            {
+                $data = str_replace('{prefix}', self::$db_prefix, $value);
+                $db_bind = self::$db_connect->prepare($data);
+                $db_bind->execute();
+            }
+   
             // next step
         } catch(PDOExeception $error){
             // html error 
@@ -160,8 +191,62 @@ class Management
         } 
     }
     
-    static public function selectFrom()
+    static public function selectFrom($table, $column = '*', $where = '1=1', $db_name = null)
     {
+        if(!(self::isConnected() && self::prefixExists()) && !empty($table))
+        {
+           return false;
+        } 
+        
+        if(!is_array($db_name) && empty($db_name))
+        {
+            $db_name = self::$db_name;
+        }
+        
+        self::useDatabase($db_name);
+        $db_bind = self::$db_connect->prepare('SELECT '.$column.' FROM '.self::$db_prefix.$table.' WHERE :where');       
+        $db_bind->bindParam(':where', $where, PDO::PARAM_STR);
+        $db_bind->execute();
+
+        $result = $db_bind->fetchAll();
+        return $result;
+    }
+    
+    static public function insertInto($table, $column, $data, $db_name = null)
+    {
+        if(!(self::isConnected() && self::prefixExists()) && !empty($table))
+        {
+           return false;
+        } 
+        
+        if(!is_array($db_name) && empty($db_name))
+        {
+            $db_name = self::$db_name;
+        }
+        self::useDatabase($db_name);
+        
+        if(empty($data) && empty($column))
+        {
+            return false;
+        }
+        
+        if(is_array($data) && is_array($column) && count($column) == count($data))
+        { 
+            $newData = implode(",:", $column);
+            $newColumn = implode(",", $column);
+            
+            $db_bind = self::$db_connect->prepare('INSERT INTO '.self::$db_prefix.$table.'('.$newColumn.') VALUE (:'.$newData.')');  
+ 
+            for($i = 0; $i<count($column); $i++)
+            {
+                $oneColumn = ':'.$column[$i];
+                $db_bind->bindParam($oneColumn, $data[$i]);
+            }
+            $db_bind->execute();
+            
+        } else{
+            return false;
+        }
     }
     
     static public function updateSet()

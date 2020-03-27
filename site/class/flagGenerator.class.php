@@ -55,14 +55,19 @@ class FlagGenerator
         return  hash('sha512', $this->salt.$name);
     }
     
-    private function isExists()
+    static private function isExists()
     {
+        require_once(realpath('./').'/class/database/management.model.class.php');
         
+        $data = Management::selectFrom('flag');
+        //INSERT INTO `apchlz_flag` (`id_flag`, `flag_name`, `flag_key`, `flag_encrypt`, `flag_view`) VALUES (NULL, 'dd', 'dd', 'dd', '1');
+        Management::insertInto('flag',array('id_flag', 'flag_name', 'flag_key', 'flag_encrypt', 'flag_view'), array(NULL, 'dd', 'dd', 'dd', '1'));
     }
     
     public static function initInstance() 
     {
         if(is_null(self::$instance)) {
+            self::isExists();
             self::$instance = new FlagGenerator();  
         }
    }
