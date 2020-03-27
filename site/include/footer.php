@@ -2,7 +2,7 @@
    <div class="container_footer">
         <div class="row">
             <div class="col-md-6">
-                <a href="https://github.com/"> 
+                <a href="https://github.com/auzou/AbConseils_Labs" target="blank"> 
                     <img src="rcs/icon/github_32.png" alt="github" style="height:32px; width:32px;">
                 </a>
              </div>
