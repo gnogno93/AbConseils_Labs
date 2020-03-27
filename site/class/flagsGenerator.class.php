@@ -15,6 +15,8 @@ class FlagsGenerator
     static private  $instance = null;
     private $salt;
     private $flags;
+    private $flagsName;
+    private $flagsValue;
     private $encrypt = ENCRYPT;
     
     private function __construct() {
@@ -22,11 +24,13 @@ class FlagsGenerator
             
             $this->salt = hash('sha512',date('Y-m-d h:i:sa'));
             
-            $flagsName = ['IJT_SQL', 'XSS', 'CSRF', 'IJT_CODE', 'IJT_OS', 'OOB_LOOP', 'INC_LOCAL', 'INC_EXT', 'UPLOAD', 'SIG_VIEW', 'PWD_BRUTE',];
+            $this->flagsName = ['IJT_SQL', 'XSS', 'CSRF', 'IJT_CODE', 'IJT_OS', 'OOB_LOOP', 'INC_LOCAL', 'INC_EXT', 'UPLOAD', 'SIG_VIEW', 'PWD_BRUTE',];
             
-            foreach($flagsName as $value)
+            foreach($this->flagsName as $value)
             {
-                $this->flags[] = [$value => $this->getHashFlags($value)];
+                $hashFlag = $this->getHashFlags($value);
+                $this->flagsValue[] = $hashFlag;
+                $this->flags[] = [$value => $this->getHashFlags($hashFlag)];
             }
             
             $this->insertFlags();
@@ -36,7 +40,12 @@ class FlagsGenerator
     
     public function getFlagsName()
     {
-        return $this->flags;
+        return $this->flagsName;
+    }
+    
+    public function getFlagsValue()
+    {
+        return $this->flagsValue;
     }
     
     private function insertFlags()

@@ -108,8 +108,8 @@ class Management
         {
             return;
         }
-        if(!$ptr = fopen($file, "r")) return;
-        if(!$content = fread($ptr, filesize($file))) return;
+        if(!$ptr = fopen($file, "r")) fclose($ptr); return;
+        if(!$content = fread($ptr, filesize($file))) fclose($ptr); return;
             
         fclose($ptr);
             
@@ -124,7 +124,7 @@ class Management
             } 
         }
         $content = implode(PHP_EOL, $content);
-        if(!$ptr = fopen($file, 'w')) return;
+        if(!$ptr = fopen($file, 'w')) fclose($ptr);  return;
             
         fwrite($ptr, $content);
         fclose($ptr); 
