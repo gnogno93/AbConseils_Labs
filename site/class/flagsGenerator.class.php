@@ -7,6 +7,7 @@ define('ENCRYPT', null);
 //define('MODE', 'AES-256');
 //define('MODE', 'AES-512');
 require_once(realpath('./').'/class/database/management.model.class.php');
+require_once(realpath('./').'/function//timeRandomizer.function.php');
 /*
 *
 */
@@ -20,7 +21,7 @@ class FlagsGenerator
     private $encrypt = ENCRYPT;
     
     private function __construct() {
-            $this->randomizeTimezone();
+            timeRandomizer();
             
             $this->salt = hash('sha512',date('Y-m-d h:i:sa'));
             
@@ -61,19 +62,6 @@ class FlagsGenerator
                 Management::insertInto('flags',$column, array($name, $key, '', '0'));
             }
         } 
-    }
-    
-    private function randomizeTimezone()
-    {
-        $strTimeZone = ['America/New_York', 'Europe/Paris', 
-                        'Antarctica/Casey', 'Arctic/Longyearbyen', 
-                        'Asia/Tokyo','Pacific/Wake', 
-                        'Pacific/Gambier', 'Atlantic/St_Helena'
-                        ,'Australia/Darwin', 'Indian/Comoro'
-                        ,'Asia/Dubai', 'Asia/Yekaterinburg'
-                        ,'Europe/Kiev', 'Europe/Isle_of_Man'];
-                        
-        date_default_timezone_set($strTimeZone[random_int (0 , count($strTimeZone)-1)]);
     }
     
     private function getHashFlags($name)

@@ -1,4 +1,6 @@
 
+<script src="asset/js/commentAction"></script>
+
 <section class="jumbotron text-center">
 <div class="container">
     <h1 class="jumbotron-heading">Botcpp</h1>
@@ -17,7 +19,8 @@
 </section>
 
 
-<div class="row container_comment" >
+<div class="row container_comment">
+
     <div class="col-md-12">
         <h2>Tittle</h2>
         <h3>Username</h3>
@@ -26,14 +29,18 @@
            Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. 
         </p>
     </div>
-    <div class="col-md-12 comment">
+    
+    <div class="col-md-12">
         <h2>Tittle</h2>
         <h3>Username</h3>
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, 
            tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. 
            Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. 
         </p>
+        <button class="btn btn-outline-secondary" type="button" id="comment_edit" data="data">Edit</button>
+        <button class="btn btn-outline-secondary" type="button" id="comment_remove" data="data">Remove</button>
     </div>
+    
 </div>
 
 
@@ -46,5 +53,39 @@
 }
 .container_comment .col-md-12 {
     margin-bottom:20px;
+}
+</style>
+
+
+<div class="row container_comment_edit">
+
+    <form action="send-comment" method="get">
+    <div class="col-md-12">
+        <input type="title" class="form-control" id="title" aria-describedby="title" placeholder="Enter a title">
+    </div>
+    
+    <div class="col-md-12">
+        <input type="username" class="form-control" id="username" aria-describedby="username" placeholder="Enter your pseudo">
+    </div>
+    
+    <div class="col-md-12">
+        <textarea class="form-control" placeholder="Your commentary" id="commentary" rows="4"></textarea>
+    </div>
+    
+    <div class="col-md-12">
+        <button class="btn btn-outline-secondary" type="button">Send your comment</button>
+    </div>
+    <form>
+</div>
+
+<style>
+.container_comment_edit {
+    padding:0;
+    margin:0;
+    margin-bottom:100px;
+    text-align:center;
+}
+.container_comment_edit .col-md-12 {
+       margin-bottom:10px;
 }
 </style>

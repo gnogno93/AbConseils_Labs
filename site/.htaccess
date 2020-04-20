@@ -3,3 +3,6 @@ RewriteEngine On
 
 RewriteRule ^$ index.php [L]
 RewriteRule ^home$ index.php [L]
+RewriteRule ^download$ include/download.php [L]
+RewriteRule ^documentation$ include/documentation.php [L]
+RewriteRule ^faq$ include/faq.php [L]
