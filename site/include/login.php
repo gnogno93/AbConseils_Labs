@@ -20,15 +20,15 @@
 			<div class="card-body">
 				<form action="login-controler" method="POST">
 					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<img src="rcs/icon/bot.png" width="30" height="30" class="d-inline-block align-top" alt="" ></img>    
+						<div class="input-group-prepend"  style="padding-right:10px;">
+							<img src="rcs/icon/user.png" width="30" height="30" class="d-inline-block align-top" alt="user-icon" ></img>    
 						</div>
 						<input type="text" class="form-control" placeholder="username">
 						
 					</div>
 					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<img src="rcs/icon/bot.png" width="30" height="30" class="d-inline-block align-top" alt="" ></img>   
+						<div class="input-group-prepend" style="padding-right:10px;">
+							<img src="rcs/icon/password.png" width="30" height="30" class="d-inline-block align-top" alt="" ></img>   
 						</div>
 						<input type="password" class="form-control" placeholder="password">
 					</div>

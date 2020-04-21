@@ -20,7 +20,7 @@
 
 
 <div class="row container_comment">
-
+    <?php foreach(array(1,2,3) as $value) :?>
     <div class="col-md-12">
         <h2>Tittle</h2>
         <h3>Username</h3>
@@ -29,6 +29,8 @@
            Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. 
         </p>
     </div>
+    <?php endforeach ?>
+    
     
     <div class="col-md-12">
         <h2>Tittle</h2>
@@ -50,16 +52,23 @@
     margin:0;
     margin-bottom:100px;
     text-align:center;
+    padding-left:20px;
+    padding-right:20px;
+    
 }
 .container_comment .col-md-12 {
     margin-bottom:20px;
+    padding-bottom:20px;
+    border: 0.1em solid #34475E;
+    border-radius: 20px;
 }
 </style>
 
 
 <div class="row container_comment_edit">
 
-    <form action="send-comment" method="get">
+    <form action="send-comment" method="get" class="justify-content-center" style="width:100%;">
+    
     <div class="col-md-12">
         <input type="title" class="form-control" id="title" aria-describedby="title" placeholder="Enter a title">
     </div>
@@ -84,8 +93,13 @@
     margin:0;
     margin-bottom:100px;
     text-align:center;
+    border: 0.6em solid #34475E;
+    border-radius: 10px;
+    margin-left:20px;
+    margin-right:20px;
 }
 .container_comment_edit .col-md-12 {
-       margin-bottom:10px;
+    margin-bottom:10px;
+    margin-top:10px;
 }
 </style>
