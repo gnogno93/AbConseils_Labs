@@ -1,6 +1,6 @@
 
 <?php 
-require_once(realpath('./').'/include/head.php');
+    require_once(dirname(__FILE__).'/head.php');
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="menu">
   <img src="rcs/icon/bot.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -35,7 +35,7 @@ require_once(realpath('./').'/include/head.php');
           <a class="dropdown-item" href="sign-in">Sign In</a>
           <a class="dropdown-item" href="sign-up">Sign Up</a>
           <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Account</a>
+            <a class="dropdown-item" href="account">Account</a>
         </div>
       </li>
     </ul>
