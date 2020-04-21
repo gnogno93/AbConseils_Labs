@@ -6,14 +6,17 @@ jQuery(document).ready(function(){
    });
    
    jQuery('#comment_remove').click(function(){
-        removeAction(selectData(this));
+        removeAction(this, selectData(this));
    });
    selectData = function (id) {
        return jQuery(id).attr('data');
    }
    
-   removeAction = function(dataId) {
-       alert(dataId);
+   removeAction = function(id, dataId) {
+       if(dataId) // check // check nonce
+       {
+           jQuery(id).parent().remove();
+       }
    }
    
    editAction = function(dataId) {
@@ -21,6 +24,7 @@ jQuery(document).ready(function(){
    }
    
    _insertComment = function () {
+       // html comment
    }
    
    // check nonce

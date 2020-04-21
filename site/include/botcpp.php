@@ -19,7 +19,7 @@
 </section>
 
 
-<div class="row container_comment">
+<div class="row container_comment" id="container_comment">
     <?php foreach(array(1,2,3) as $value) :?>
     <div class="col-md-12">
         <h2>Tittle</h2>
