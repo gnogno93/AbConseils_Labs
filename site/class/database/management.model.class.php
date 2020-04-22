@@ -163,7 +163,7 @@ class Management
         } 
     }
     
-    static public function createTable()
+    static public function createBase()
     {
         if(!(self::isConnected() && self::prefixExists()))
         {

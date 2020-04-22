@@ -1,6 +1,6 @@
 <?php 
 
-
+require_once(dirname(__FILE__).'/database/management.model.class.php');
 
 class FlagsLoader 
 {
@@ -44,16 +44,19 @@ class FlagsLoader
     
     public static function initInstance() 
     {
-        require_once(realpath('./').'/class/flagsGenerator.class.php');
-        
-        FlagsGenerator::initInstance();
-        $instanceOfGenerator = FlagsGenerator::getInstance();
-        
-        if(is_null(self::$instance) 
-            && $instanceOfGenerator instanceof FlagsGenerator 
-            && !empty($instanceOfGenerator->getFlagsName())) 
+        if(!empty(Management::selectFrom('flag')))
         {
-            self::$instance = new FlagsLoader($instanceOfGenerator->getFlagsName(), $instanceOfGenerator->getFlagsValue());  
+            require_once(realpath('./').'/class/flagsGenerator.class.php');
+        
+            FlagsGenerator::initInstance();
+            $instanceOfGenerator = FlagsGenerator::getInstance();
+        
+            if(is_null(self::$instance) 
+                && $instanceOfGenerator instanceof FlagsGenerator 
+                && !empty($instanceOfGenerator->getFlagsName())) 
+            {
+                self::$instance = new FlagsLoader($instanceOfGenerator->getFlagsName(), $instanceOfGenerator->getFlagsValue());  
+            }
         }
     }
    

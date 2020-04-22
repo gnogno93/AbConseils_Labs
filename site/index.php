@@ -11,7 +11,7 @@
     require_once(dirname(__FILE__).'/class/database/management.model.class.php');
       
     Management::createDatabase();
-    Management::createTable();
+    Management::createBase();
      
     require_once(dirname(__FILE__).'/class/flagsLoader.class.php');
      
