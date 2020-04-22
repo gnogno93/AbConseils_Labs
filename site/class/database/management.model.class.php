@@ -172,18 +172,41 @@ class Management
         
         try 
         {
-            $schema = file_get_contents(dirname(__FILE__).'/schema/schema.json');
-            $schema = json_decode($schema); 
-            
-            self::useDatabase('test');
-            
-            foreach($schema->DATABASE as $key => $value)
+            $admin = self::selectFrom('users','user_login','user_login','administrator');
+            if(empty($admin))
             {
-                $data = str_replace('{prefix}', self::$db_prefix, $value);
-                $db_bind = self::$db_connect->prepare($data);
-                $db_bind->execute();
+                $schema = file_get_contents(dirname(__FILE__).'/schema.json');
+                $schema = json_decode($schema); 
+            
+                self::useDatabase('test');
+            
+                if(!empty($schema->DATABASE))
+                {
+                    foreach($schema->DATABASE as $key => $value)
+                    {
+                        $data = str_replace('{prefix}', self::$db_prefix, $value);
+                        $db_bind = self::$db_connect->prepare($data);
+                        $db_bind->execute();
+                    }
+                }
+                $schema = file_get_contents(dirname(__FILE__).'/info.json');
+                $schema = json_decode($schema);
+                date_default_timezone_set('UTC');
+                if(!empty($schema->BASE))
+                {
+                    foreach($schema->BASE as $key => $value)
+                    {
+                        if(!empty($value))
+                        {
+                            $data = str_replace('{prefix}', self::$db_prefix, $value);
+                            $data = str_replace('{datetimeutc}', date('Y-m-d H:i:s'), $data);
+                            $data = str_replace('{passwd}', hash('sha512',date('Y-m-d h:i:sa')), $data);
+                            $db_bind = self::$db_connect->prepare($data);
+                            $db_bind->execute();
+                        }
+                    }
+                }
             }
-   
             // next step
         } catch(PDOExeception $error){
             // html error 
@@ -191,7 +214,7 @@ class Management
         } 
     }
     
-    static public function selectFrom($table, $column = '*', $where = '1=1', $db_name = null)
+    static public function selectFrom($table, $column = '*', $whereColumn = '1', $whereData='1', $db_name = null)
     {
         if(!(self::isConnected() && self::prefixExists()) && !empty($table))
         {
@@ -204,8 +227,8 @@ class Management
         }
         
         self::useDatabase($db_name);
-        $db_bind = self::$db_connect->prepare('SELECT '.$column.' FROM '.self::$db_prefix.$table.' WHERE :where');       
-        $db_bind->bindParam(':where', $where, PDO::PARAM_STR);
+        $db_bind = self::$db_connect->prepare('SELECT '.$column.' FROM '.self::$db_prefix.$table.' WHERE '.$whereColumn.'=:whereData');       
+        $db_bind->bindParam(':whereData', $whereData, PDO::PARAM_STR);
         $db_bind->execute();
 
         $result = $db_bind->fetchAll();
