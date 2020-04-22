@@ -22,7 +22,6 @@ class FlagsGenerator
     
     private function __construct() {
             timeRandomizer();
-            
             $this->salt = hash('sha512',date('Y-m-d h:i:sa'));
             
             $this->flagsName = ['IJT_SQL', 'XSS', 'CSRF', 'IJT_CODE', 'IJT_OS', 'OOB_LOOP', 'INC_LOCAL', 'INC_EXT', 'UPLOAD', 'SIG_VIEW', 'PWD_BRUTE',];

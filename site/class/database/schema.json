@@ -7,7 +7,7 @@
     "DATABASE": {
         "users":"CREATE TABLE IF NOT EXISTS {prefix}users(id_user BIGINT AUTO_INCREMENT PRIMARY KEY, user_login VARCHAR(60), user_pass VARCHAR(255), user_email VARCHAR(100), user_first_name VARCHAR(50), user_last_name VARCHAR(50), user_registered_UTC DATETIME, user_status VARCHAR(50), user_role VARCHAR(50)) ENGINE=INNODB;"
         ,
-        "flag":"CREATE TABLE IF NOT EXISTS {prefix}flag (id_flag INT AUTO_INCREMENT PRIMARY KEY, flag_name VARCHAR(50), flag_key VARCHAR(512), flag_encrypt VARCHAR(512), flag_view INT ) ENGINE=INNODB;"
+        "flags":"CREATE TABLE IF NOT EXISTS {prefix}flags (id_flag INT AUTO_INCREMENT PRIMARY KEY, flag_name VARCHAR(50), flag_key VARCHAR(512), flag_encrypt VARCHAR(512), flag_view INT ) ENGINE=INNODB;"
         ,
         "comment":"CREATE TABLE IF NOT EXISTS {prefix}comment (id_comment INT AUTO_INCREMENT PRIMARY KEY, comment_author VARCHAR(50), comment_date DATETIME, comment_datetime_gmt DATETIME ) ENGINE=INNODB;"
         ,

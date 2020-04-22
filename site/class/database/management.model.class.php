@@ -259,9 +259,9 @@ class Management
             $newColumn = implode(",", $column);
             
             $db_bind = self::$db_connect->prepare('INSERT INTO '.self::$db_prefix.$table.'('.$newColumn.') VALUE (:'.$newData.')');  
- 
+
             for($i = 0; $i<count($column); $i++)
-            {
+            { 
                 $oneColumn = ':'.$column[$i];
                 $db_bind->bindParam($oneColumn, $data[$i]);
             }
