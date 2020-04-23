@@ -9,7 +9,7 @@
                 "ban",
                 "delete"
     ],
-    "BASE" : {
+    "BASE_MEMBER" : {
         "admin" : "INSERT INTO {prefix}users(user_login, user_pass,user_email,user_first_name,user_last_name, user_registered_utc, user_status,user_role) VALUES ('administrator', '{passwd}', 'ADMIN@ADMIN.ADMIN', 'ADMIN','ADMIN','{datetimeutc}','active','admin')",
         "member_1" : "INSERT INTO {prefix}users(user_login, user_pass,user_email,user_first_name,user_last_name, user_registered_utc, user_status,user_role) VALUES ('rebecca_la_plus_belle', '{passwd}', 'Rebecca@Rebecca.Rebecca', 'Rebecca','Rebeccate','{datetimeutc}','active','member')",
         "member_2" : "INSERT INTO {prefix}users(user_login, user_pass,user_email,user_first_name,user_last_name, user_registered_utc, user_status,user_role) VALUES ('oxana_la_street', '{passwd}', 'oxana@oxana.oxana', 'Oxana','Oxanate','{datetimeutc}','active','member')",
@@ -20,5 +20,17 @@
         "member_7" : "INSERT INTO {prefix}users(user_login, user_pass,user_email,user_first_name,user_last_name, user_registered_utc, user_status,user_role) VALUES ('H', '{passwd}', 'h@h.h', 'H','H','{datetimeutc}','active','moderator')",
         "member_8" : "INSERT INTO {prefix}users(user_login, user_pass,user_email,user_first_name,user_last_name, user_registered_utc, user_status,user_role) VALUES ('HXX', '{passwd}', 'hxx@hxx.hxx', 'Hxx','Hxx','{datetimeutc}','active','moderator')",
         "member_9" : "INSERT INTO {prefix}users(user_login, user_pass,user_email,user_first_name,user_last_name, user_registered_utc, user_status,user_role) VALUES ('INC', '{passwd}', 'inc@inc.inc', 'Inc','Inc','{datetimeutc}','active','moderator')"
+    },
+    "BASE_COMMENT" : {
+        "admin" : "",
+        "member_1" : "",
+        "member_2" : "",
+        "member_3" : "",
+        "member_4" : "",
+        "member_5" : "",
+        "member_6" : "",
+        "member_7" : "",
+        "member_8" : "",
+        "member_9" : ""
     }
 }

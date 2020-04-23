@@ -32,7 +32,7 @@ class FlagsLoader
     {
         if(!$instanceOfGenerator->isExists)
         {
-            require_once(realpath('./').'/class/flagsWriter.class.php');
+            require_once(dirname(__FILE__).'/flagsWriter.class.php');
             foreach($this->flagsData as $value)
             {
                 $writer =  new FlagsWriter($value[0], $value[1], $value[2]);
@@ -45,7 +45,7 @@ class FlagsLoader
     public static function initInstance() 
     {
         //var_dump($);
-        require_once(realpath('./').'/class/flagsGenerator.class.php');
+        require_once(dirname(__FILE__).'/flagsGenerator.class.php');
         
         FlagsGenerator::initInstance();
         $instanceOfGenerator = FlagsGenerator::getInstance();

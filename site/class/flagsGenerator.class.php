@@ -6,8 +6,8 @@ define('ENCRYPT', null);
 //define('MODE', 'AES-128');
 //define('MODE', 'AES-256');
 //define('MODE', 'AES-512');
-require_once(realpath('./').'/class/database/management.model.class.php');
-require_once(realpath('./').'/function//timeRandomizer.function.php');
+require_once(dirname(__FILE__).'/database/management.model.class.php');
+require_once(dirname(__FILE__).'/../function//timeRandomizer.function.php');
 /*
 *
 */

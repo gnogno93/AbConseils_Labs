@@ -21,7 +21,7 @@ define('DB_DATABASE', 'test');
 define('DB_PREFIX', 'aPChLZ_');
 //define('DB_PREFIX', null); // autoChange
 
-require_once(realpath('./').'/function/prefix.function.php');
+require_once(dirname(__FILE__).'../../../function/prefix.function.php');
 
 
 /*
@@ -192,9 +192,9 @@ class Management
                 $schema = file_get_contents(dirname(__FILE__).'/info.json');
                 $schema = json_decode($schema);
                 date_default_timezone_set('UTC');
-                if(!empty($schema->BASE))
+                if(!empty($schema->BASE_MEMBER))
                 {
-                    foreach($schema->BASE as $key => $value)
+                    foreach($schema->BASE_MEMBER as $key => $value)
                     {
                         if(!empty($value))
                         {
@@ -206,6 +206,20 @@ class Management
                         }
                     }
                 }
+                if(!empty($schema->BASE_COMMENT))
+                {
+                    foreach($schema->BASE_MEMBER as $key => $value)
+                    {
+                        if(!empty($value))
+                        {
+                            $data = str_replace('{prefix}', self::$db_prefix, $value);
+                            $data = str_replace('{datetimeutc}', date('Y-m-d H:i:s'), $data);
+                            $db_bind = self::$db_connect->prepare($data);
+                            $db_bind->execute();
+                        }
+                    }
+                }
+                
             }
             // next step
         } catch(PDOExeception $error){
