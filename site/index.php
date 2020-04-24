@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="fr">
+<html lang="en">
 <?php
     require_once(dirname(__FILE__).'/include/head.php'); 
 ?>
