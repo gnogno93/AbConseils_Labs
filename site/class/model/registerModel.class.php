@@ -41,8 +41,8 @@ class RegisterModel
             return false;
         }
     }
-    
-    private function getColumnArray()
+
+    public function getColumnArray()
     {
          return [
             "user_login", 

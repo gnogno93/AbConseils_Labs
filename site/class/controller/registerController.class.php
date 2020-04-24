@@ -24,6 +24,14 @@ class RegisterController
         $this->userEmail = (isset($_POST['user_email'])) ? htmlentities($_POST['user_email']) : NULL;
         $this->userFirstName = (isset($_POST['user_first_name'])) ? htmlentities($_POST['user_first_name']) : NULL;
         $this->userLastName = (isset($_POST['user_last_name'])) ? htmlentities($_POST['user_last_name']) : NULL; 
+
+        foreach($this->getDataArray() as $value)
+        {
+            if(empty($value))
+            {
+                return;
+            }
+        }
         
         $this->salt = hash('sha512', "ab_conseils");
         
@@ -42,7 +50,9 @@ class RegisterController
             $this->registerModel->saveRegister($this->getDataArray());
             echo 'Your user login is ';
             echo $this->registerModel->getUser($this->userName);
-            //$this->authApproved();
+            require_once(dirname(__FILE__).'../../session.class.php');
+            Session::sessionStart(array_combine($this->registerModel->getColumnArray(), $this->getDataArray()));
+            $this->authApproved();
         } else {
             $this->authNotApproved();
         }
@@ -50,7 +60,7 @@ class RegisterController
 
     public function authApproved()
     {
-        header('Location: approved');
+        header('Location: home');
     }
     public function authNotApproved()
     {

@@ -1,6 +1,7 @@
 
 <?php 
     require_once(dirname(__FILE__).'/head.php');
+    if(session_status() !== PHP_SESSION_ACTIVE) session_start();
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="menu">
   <img src="rcs/icon/bot.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -35,14 +36,22 @@
         </a>  
         
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="sign-in">Sign In</a>
-          <a class="dropdown-item" href="sign-up">Sign Up</a>
+          <a class="dropdown-item" href="<?php echo (isset($_SESSION['user_login'])) ? 'account' : 'sign-in'; ?>">Sign In</a>
+          <a class="dropdown-item" href="<?php echo (isset($_SESSION['user_login'])) ? 'account' : 'sign-up'; ?>">Sign Up</a>
           <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="account">
                 <img src="rcs/icon/user.png" width="20" height="20" class="d-inline-block align-top" alt="user-icon" ></img>
-                Account
+                Account 
+                <?php echo (isset($_SESSION['user_login'])) ? $_SESSION['user_login'] : ''; ?>
             </a>
+            <?php if(isset($_SESSION['user_login'])) : ?>
+            <a class="dropdown-item" href="logout">
+                <img src="rcs/icon/logout.png" width="20" height="20" class="d-inline-block align-top" alt="user-icon" ></img>
+                    Logout
+            </a>
+            <?php endif ?>
         </div>
+        
       </li>
     </ul>
     
