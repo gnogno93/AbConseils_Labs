@@ -7,7 +7,7 @@ define('ENCRYPT', null);
 //define('MODE', 'AES-256');
 //define('MODE', 'AES-512');
 require_once(dirname(__FILE__).'/database/management.model.class.php');
-require_once(dirname(__FILE__).'/../function//timeRandomizer.function.php');
+require_once(dirname(__FILE__).'/../function/timeRandomizer.function.php');
 /*
 *
 */
@@ -68,9 +68,8 @@ class FlagsGenerator
         return  hash('sha512', $this->salt.$name);
     }
     
-    static private function isExists()
+    static public function isExists()
     {   
-        $data = Management::selectFrom('flags');
         if(empty(Management::selectFrom('flags')))
         {
             return true;

@@ -9,7 +9,7 @@ class FlagsLoader
         
         $flagsPath = [  
                         '', 
-                        '', 
+                        '/class/controller/', 
                         '',
                         '',
                         '',
@@ -30,31 +30,28 @@ class FlagsLoader
     
     private function startWritting()
     {
-        if(!$instanceOfGenerator->isExists)
+        require_once(dirname(__FILE__).'/flagsWriter.class.php');
+        foreach($this->flagsData as $value)
         {
-            require_once(dirname(__FILE__).'/flagsWriter.class.php');
-            foreach($this->flagsData as $value)
-            {
-                $writer =  new FlagsWriter($value[0], $value[1], $value[2]);
-                $writer->run();
-                unset($writer);
-            }
+            $writer =  new FlagsWriter($value[0], $value[1], $value[2]);
+            $writer->run();
+            unset($writer);
         }
     }
     
     public static function initInstance() 
     {
-        //var_dump($);
         require_once(dirname(__FILE__).'/flagsGenerator.class.php');
-        
-        FlagsGenerator::initInstance();
-        $instanceOfGenerator = FlagsGenerator::getInstance();
-        
-        if(is_null(self::$instance) 
-            && $instanceOfGenerator instanceof FlagsGenerator 
-            && !empty($instanceOfGenerator->getFlagsName())) 
+        if(FlagsGenerator::isExists())
         {
-            self::$instance = new FlagsLoader($instanceOfGenerator->getFlagsName(), $instanceOfGenerator->getFlagsValue());  
+            FlagsGenerator::initInstance();
+            $instanceOfGenerator = FlagsGenerator::getInstance();
+            if(is_null(self::$instance) 
+                && $instanceOfGenerator instanceof FlagsGenerator 
+                && !empty($instanceOfGenerator->getFlagsName())) 
+            {
+                self::$instance = new FlagsLoader($instanceOfGenerator->getFlagsName(), $instanceOfGenerator->getFlagsValue());  
+            }
         }
     }
    

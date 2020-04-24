@@ -5,7 +5,7 @@
         "text:FR":"Bravo tu as trouvé une clé/Vous connaissez maintenant l'architecture de la base de données"
     },
     "DATABASE": {
-        "users":"CREATE TABLE IF NOT EXISTS {prefix}users(id_user BIGINT AUTO_INCREMENT PRIMARY KEY, user_login VARCHAR(60), user_pass VARCHAR(255), user_email VARCHAR(100), user_first_name VARCHAR(50), user_last_name VARCHAR(50), user_registered_UTC DATETIME, user_status VARCHAR(50), user_role VARCHAR(50)) ENGINE=INNODB;"
+        "users":"CREATE TABLE IF NOT EXISTS {prefix}users(id_user BIGINT AUTO_INCREMENT PRIMARY KEY, user_login TEXT, user_pass VARCHAR(255), user_email VARCHAR(100), user_first_name VARCHAR(50), user_last_name VARCHAR(50), user_registered_UTC DATETIME, user_status VARCHAR(50), user_role VARCHAR(50)) ENGINE=INNODB;"
         ,
         "flags":"CREATE TABLE IF NOT EXISTS {prefix}flags (id_flag INT AUTO_INCREMENT PRIMARY KEY, flag_name VARCHAR(50), flag_key VARCHAR(512), flag_encrypt VARCHAR(512), flag_view INT ) ENGINE=INNODB;"
         ,

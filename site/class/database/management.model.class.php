@@ -10,7 +10,7 @@
 define('DB_SERVER','127.0.0.1:3308');
 define('DB_USERNAME','root');
 define('DB_PASSWORD','root');
-define('DB_DATABASE', 'test');
+define('DB_DATABASE', 'test2');
 
 /*
 * WARNING: do not delete the comment below 
@@ -138,7 +138,6 @@ class Management
            return false;
         } 
 
-
         
         try 
         {
@@ -208,7 +207,7 @@ class Management
                 }
                 if(!empty($schema->BASE_COMMENT))
                 {
-                    foreach($schema->BASE_MEMBER as $key => $value)
+                    foreach($schema->BASE_COMMENT as $key => $value)
                     {
                         if(!empty($value))
                         {
@@ -244,7 +243,7 @@ class Management
         $db_bind = self::$db_connect->prepare('SELECT '.$column.' FROM '.self::$db_prefix.$table.' WHERE '.$whereColumn.'=:whereData');       
         $db_bind->bindParam(':whereData', $whereData, PDO::PARAM_STR);
         $db_bind->execute();
-
+ 
         $result = $db_bind->fetchAll();
         return $result;
     }
@@ -279,7 +278,9 @@ class Management
                 $oneColumn = ':'.$column[$i];
                 $db_bind->bindParam($oneColumn, $data[$i]);
             }
+            
             $db_bind->execute();
+            //print_r($db_bind->errorInfo());
             
         } else{
             return false;
