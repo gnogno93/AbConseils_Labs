@@ -8,7 +8,7 @@ class FlagsLoader
     public function __construct($flagsName, $flagsValue) {
         
         $flagsPath = [  
-                        '', 
+                        '/class/controller/', 
                         '/class/controller/', 
                         '',
                         '',

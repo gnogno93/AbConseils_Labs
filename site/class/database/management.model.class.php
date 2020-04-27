@@ -226,6 +226,27 @@ class Management
             echo 'Connection failed '. $error->getMessage();
         } 
     }
+    /*
+        sql injection
+    */
+    static public function selectFrom_IJT_SQL($table, $column = '*', $where = '1=1', $db_name = null)
+    {
+        if(!(self::isConnected() && self::prefixExists()) && !empty($table))
+        {
+           return false;
+        } 
+        
+        if(!is_array($db_name) && empty($db_name))
+        {
+            $db_name = self::$db_name;
+        }
+        
+        self::useDatabase($db_name);
+        
+        $db_bind = self::$db_connect->prepare('SELECT '.$column.' FROM '.self::$db_prefix.$table.' WHERE '.$where);
+        $db_bind->execute();
+        return $db_bind->fetchAll();
+    }
     
     static public function selectFrom($table, $column = '*', $whereColumn = '1', $whereData='1', $db_name = null)
     {

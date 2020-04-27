@@ -16,25 +16,25 @@
 
 			</div>
 			<div class="card-body">
-				<form action="login-controler" method="POST">
+				<form action="login" method="POST">
 					<div class="input-group form-group">
 						<div class="input-group-prepend"  style="padding-right:10px;">
 							<img src="rcs/icon/user.png" width="30" height="30" class="d-inline-block align-top" alt="user-icon" ></img>    
 						</div>
-						<input type="text" class="form-control" placeholder="username">
+						<input type="text"  name="user_name" class="form-control" placeholder="username">
 						
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend" style="padding-right:10px;">
 							<img src="rcs/icon/password.png" width="30" height="30" class="d-inline-block align-top" alt="" ></img>   
 						</div>
-						<input type="password" class="form-control" placeholder="password">
+						<input type="password" name="user_password" class="form-control" placeholder="password">
 					</div>
 					<div class="row align-items-center remember" style="padding-right: 25px; padding-left: 25px;">
 						<input type="checkbox">Remember Me
 					</div>
 					<div class="form-group" style="text-align:center;">
-						<input type="submit" value="Login" class="btn center-block login_btn">
+						<input type="submit" value="Login" class="btn center-block btn-primary">
 					</div>
 				</form>
 			</div>

@@ -54,7 +54,7 @@
 					</div>
                     
 					<div class="form-group" style="text-align:center;">
-						<input type="submit" value="Login" class="btn center-block login_btn">
+						<input type="submit" value="Login" class="btn center-block btn-primary">
 					</div>
                     
 				</form>

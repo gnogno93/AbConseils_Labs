@@ -8,11 +8,13 @@ class Session
     
     static function sessionStart($userDataArray)
     {
+
         if(session_status() !== PHP_SESSION_ACTIVE) session_start();
         if(is_array($userDataArray) && !empty($userDataArray))
         {
             foreach($userDataArray as $key => $value)
             {
+                var_dump($key);
                 $_SESSION[$key] = $value;
             }
         }

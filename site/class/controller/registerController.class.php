@@ -29,6 +29,7 @@ class RegisterController
         {
             if(empty($value))
             {
+                $this->authNotApproved();
                 return;
             }
         }
@@ -42,17 +43,20 @@ class RegisterController
     {
         if(!$this->registerModel->userIsExist($this->userName))
         {
+            
             if(strpos($this->userName, '<script>') !== false)
             {
-                $alert = 'alert("Your token XSS -> '.$this->registerModel->getTokenXSS().'");';
-                $this->userName = insertFlag($this->userName, '<script>', $alert);
+                $this->userName = htmlentities($this->userName);
+                $alert = '<script>alert("Your token XSS -> '.$this->registerModel->getTokenXSS().'")</script>';
+                echo $alert;
+                //$this->userName = insertFlag($this->userName, '<script>', $alert);
             }
+            $this->userPassword = $this->encryptePassword($this->userPassword);      
             $this->registerModel->saveRegister($this->getDataArray());
-            echo 'Your user login is ';
-            echo $this->registerModel->getUser($this->userName);
+            
             require_once(dirname(__FILE__).'../../session.class.php');
             Session::sessionStart(array_combine($this->registerModel->getColumnArray(), $this->getDataArray()));
-            $this->authApproved();
+            //$this->authApproved();
         } else {
             $this->authNotApproved();
         }
@@ -69,7 +73,6 @@ class RegisterController
     }
     private function getDataArray()
     {
-        
         $dataArray = [
             $this->userName,
             $this->userPassword,
@@ -86,7 +89,7 @@ class RegisterController
 
     public function encryptePassword($password)
     {
-        return hash('sha1', $this->userPassword.$this->Salt);
+        return hash('sha1', $this->userPassword.$this->salt);
     }
 }
 
