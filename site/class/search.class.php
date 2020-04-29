@@ -29,9 +29,11 @@ class Search
     {
         foreach($this->searchList as $key => $value)
         {
+            
             if($key == $this->searchName)
             {
-                header("Location: $value");
+               header("Location: $value");
+               die;
             }
         }
         header('Location: home');
