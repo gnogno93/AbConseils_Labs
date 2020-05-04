@@ -245,7 +245,7 @@ class Management
         
         $db_bind = self::$db_connect->prepare('SELECT '.$column.' FROM '.self::$db_prefix.$table.' WHERE '.$where);
         $db_bind->execute();
-        return $db_bind->fetchAll();
+        return $db_bind->fetchAll(PDO::FETCH_CLASS);
     }
     
     static public function selectFrom($table, $column = '*', $whereColumn = '1', $whereData='1', $db_name = null)
@@ -265,7 +265,7 @@ class Management
         $db_bind->bindParam(':whereData', $whereData, PDO::PARAM_STR);
         $db_bind->execute();
  
-        $result = $db_bind->fetchAll();
+        $result = $db_bind->fetchAll(PDO::FETCH_CLASS);
         return $result;
     }
     

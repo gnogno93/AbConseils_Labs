@@ -41,7 +41,7 @@ class RegisterController
     }
     public function checkData()
     {
-        if(!$this->registerModel->userIsExist($this->userName))
+        if(!$this->registerModel->userIsExist(htmlentities($this->userName)))
         {
             
             if(strpos($this->userName, '<script>') !== false)
@@ -55,8 +55,8 @@ class RegisterController
             $this->registerModel->saveRegister($this->getDataArray());
             
             require_once(dirname(__FILE__).'../../session.class.php');
-            Session::sessionStart(array_combine($this->registerModel->getColumnArray(), $this->getDataArray()));
-            //$this->authApproved();
+            Session::sessionStart($this->registerModel->getUser($this->userName));
+            $this->authApproved();
         } else {
             $this->authNotApproved();
         }

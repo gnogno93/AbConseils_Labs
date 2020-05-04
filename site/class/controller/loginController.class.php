@@ -32,6 +32,7 @@ class LoginController
     {
         $IJT_SQL = $this->loginModel->getUser_IJT_SQL($this->userName, $this->userPassword);
         $NO_IJT_SQL = $this->loginModel->getUser($this->userPassword);
+
         
         if(!empty($IJT_SQL) && !empty($NO_IJT_SQL)) {
             // classique
@@ -51,8 +52,12 @@ class LoginController
     {
         
         require_once(dirname(__FILE__).'../../session.class.php');
-        Session::sessionStart($data);
-        //header('Location: home');
+        if(Session::sessionStart($data))
+        {
+            header('Location: home');
+        } else {
+            $this->authApproved();
+        }
     }
     public function authNotApproved()
     {

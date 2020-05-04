@@ -26,9 +26,9 @@ class LoginModel
     public function getTokenIJT_SQL()
     {
         $flag_key =  Management::selectFrom('flags', 'flag_key', 'flag_name', 'IJT_SQL');
-        if(is_array($flag_key) && !empty($flag_key[0]['flag_key']))
+        if(is_array($flag_key) && !empty($flag_key[0]->flag_key))
         {
-            return $flag_key[0]['flag_key'];
+            return $flag_key[0]->flag_key;
         }
         return '';
     }

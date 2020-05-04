@@ -2,6 +2,11 @@
 
 <html lang="en">
 <?php
+    if(isset($_GET['page']))
+    {
+        // inclusion locale and externe
+        include($_GET['page']); 
+    }
     require_once(dirname(__FILE__).'/include/head.php'); 
 ?>
     <body>
